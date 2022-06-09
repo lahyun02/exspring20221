@@ -27,9 +27,9 @@ public class ExSpring {
 		app.say();
 		
 		// 스프링에 등록되어 있는 객체들의 목록 
-		for (String bn : context.getBeanDefinitionNames()) {
-			System.out.println( bn + " : " + context.getBean(bn).getClass().getName());
-		}
+//		for (String bn : context.getBeanDefinitionNames()) {
+//			System.out.println( bn + " : " + context.getBean(bn).getClass().getName());
+//		}
 		
 	}
 }

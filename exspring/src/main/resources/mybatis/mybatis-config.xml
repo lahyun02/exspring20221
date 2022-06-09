@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  <!-- config 파일은 설정파일이기 때문에 테이블이 늘어나도 하나만 만들어서 관리. 이 설정 파일에 내용만 추가하면 된다.  -->
+<configuration>
+  <settings>
+	<!-- 밑줄표기법의 컬럼명을 낙타표기법의 변수명과 자동맵핑 -->
+  	<setting name="mapUnderscoreToCamelCase" value="true"/>
+  </settings>
+  
+  <typeAliases>
+  	<!-- 마이바티스 설정파일에서 "com.exam.member.MemberVo" 대신 "MemberVo" 사용 가능 -->
+  	<!-- 테이블이 추가될 때마다 여기에 객체 경로 설정  -->
+  	<typeAlias type="com.exam.member.MemberVo" alias="MemberVo"/>
+  	<!-- <typeAlias type="com.exam.student.StudentVo" alias="StudentVo"/> -->
+  </typeAliases>
+  
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="oracle.jdbc.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+        <property name="username" value="web"/>
+        <property name="password" value="web01"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+  	<!-- 마이바티스를 통해서 실행할 SQL문들을 정의해놓은 XML파일들.-->
+  	<!-- 테이블이 하나씩 추가될 때마다 mapper 파일을 만들고 여기에 추가하면 된다.  -->
+    <mapper resource="mybatis/MemberMapper.xml"/>
+    <!-- <mapper resource="mybatis/StudentMapper.xml"/> -->
+  </mappers>
+</configuration>
