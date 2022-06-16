@@ -36,4 +36,20 @@
 	</servlet-mapping>
 	<!-- 확장자 설정으로 매핑. (이미지파일을 처리할 필요x) -->
 	<!-- "/" : 디폴트 경로 -->
+	
+	<!-- POST 방식으로 전송되는 한글 파라미터 인코딩 설정을 위한 필터 -->
+	<filter>
+		<filter-name>encoding-filter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encoding-filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
 </web-app>

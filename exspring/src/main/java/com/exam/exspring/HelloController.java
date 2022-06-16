@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+//@Component가 기본이지만 요청을 받아서 실행한다는 의미를 명시하기 위해 @Controller 사용
 @Controller
 public class HelloController {
 	
@@ -22,14 +23,17 @@ public class HelloController {
 	// 계산결과는 MyValue 객체의 sum 변수에 저장
 	// hello.jsp 파일에서 화면 출력 
 	
+	// 뷰 이름을 알려줄거니까 리턴타입이 String이 됨
 	@RequestMapping(value = "/hello.do", method = RequestMethod.GET)
-	public String hello(Locale locale, @ModelAttribute("mv") MyValue mva, ModelMap modelMap) {
+	public String hello(Locale locale, @ModelAttribute("mv") MyValue mva, ModelMap modelMap, @ModelAttribute("date") Date now) {
 		
 		int s = mva.getX() + mva.getY();
 		mva.setSum(s);
-		Date date = new Date();
-		modelMap.addAttribute("time", date);
-		
+//		Date date = new Date();		
+//		modelMap.addAttribute("time", date);
+		modelMap.addAttribute("time", new Date());	//여러번 안쓰고 한번만 쓸 것이기 때문에 이런식으로 사용해도 됨.
+		now = new Date();
+		System.out.println(now); 
 		return "hw/hello";
 	}
 }

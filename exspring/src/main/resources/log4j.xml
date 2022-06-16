@@ -11,9 +11,11 @@
 	</appender>
 	
 	<!-- Application Loggers -->
+	<!-- 로깅레벨 : (낮음) TRACE - DEBUG - INFO - WARN - ERROR - FATAL (높음) -->
 	<logger name="com.exam.exspring">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
+	<!-- myBatis는 레벨이 TRACE - DEBUG임 -->
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

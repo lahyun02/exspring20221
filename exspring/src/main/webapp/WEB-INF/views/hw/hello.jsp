@@ -10,8 +10,8 @@
 <body>
  <%-- <p> x : ${mv.x} </p> --%>
  <%-- <p> y : ${mv.y} </p> --%>
- <p> 계산결과 : ${mv.sum} </p>
+ <p> 계산결과 : ${mv.x} + ${mv.y} = ${mv.sum} </p>
  <p> 현재서버 시간 : <fmt:formatDate value="${time}" pattern="yyyy년 M월 d일 HH시 mm분"/> </p>
- 
+ <div>테스트: ${date}</div>
 </body>
 </html>

@@ -12,11 +12,14 @@
   <typeAliases>
   	<!-- 마이바티스 설정파일에서 "com.exam.member.MemberVo" 대신 "MemberVo" 사용 가능 -->
   	<!-- 테이블이 추가될 때마다 여기에 객체 경로 설정  -->
-  	<typeAlias type="com.exam.member.MemberVo" alias="MemberVo"/>
+  	<!-- 스프링 component-scan 에 맞춰서 경로 -->
+  	<typeAlias type="com.exam.exspring.member.MemberVo" alias="MemberVo"/>
   	<!-- <typeAlias type="com.exam.student.StudentVo" alias="StudentVo"/> -->
   </typeAliases>
-  
-  <environments default="development">
+
+<!-- 스프링에서 데이터베이스 연결과 트랜잭션 관리를 담당 -->
+<!-- 트랜잭션, db설정하는 건데, 스프링이 자동으로 해줘서 안쓰이기 때문에 주석처리(놔둬도 상관은 없음) -->  
+<!--   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC"/>
       <dataSource type="POOLED">
@@ -26,7 +29,8 @@
         <property name="password" value="web01"/>
       </dataSource>
     </environment>
-  </environments>
+  </environments> -->
+  
   <mappers>
   	<!-- 마이바티스를 통해서 실행할 SQL문들을 정의해놓은 XML파일들.-->
   	<!-- 테이블이 하나씩 추가될 때마다 mapper 파일을 만들고 여기에 추가하면 된다.  -->
