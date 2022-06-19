@@ -14,6 +14,7 @@
   	<!-- 테이블이 추가될 때마다 여기에 객체 경로 설정  -->
   	<!-- 스프링 component-scan 에 맞춰서 경로 -->
   	<typeAlias type="com.exam.exspring.member.MemberVo" alias="MemberVo"/>
+  	<typeAlias type="com.exam.exspring.bbs.BbsVo" alias="BbsVo"/>
   	<!-- <typeAlias type="com.exam.student.StudentVo" alias="StudentVo"/> -->
   </typeAliases>
 
@@ -35,6 +36,7 @@
   	<!-- 마이바티스를 통해서 실행할 SQL문들을 정의해놓은 XML파일들.-->
   	<!-- 테이블이 하나씩 추가될 때마다 mapper 파일을 만들고 여기에 추가하면 된다.  -->
     <mapper resource="mybatis/MemberMapper.xml"/>
+    <mapper resource="mybatis/BbsMapper.xml"/>
     <!-- <mapper resource="mybatis/StudentMapper.xml"/> -->
   </mappers>
 </configuration>
