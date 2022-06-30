@@ -1,8 +1,16 @@
 package com.exam.exspring.member;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -79,8 +87,40 @@ public class MemberController {
 		return "redirect:/member/list.do"; 
 	}
 	
+	// 메서드 자체가 주소로 보내는 것만 하니까 파라미터 (보낼 것)도 예외처리도 필요없음.
+	@RequestMapping(value = "/member/login.do", method = RequestMethod.GET)
+	public String loginForm() {
+		return "member/login";
+	}
+	
+	// MemberVo vo 파라미터 이름 -> 객체의 속성이름을 찾아서 그 값을 주입한다.
+	//세션이 필요하다 -> 세션을 받겠다 -> 파라미터에 ttpSession session 작성
+	@RequestMapping(value = "/member/login.do", method = RequestMethod.POST)
+	public String login(MemberVo vo, HttpSession session) {
+			MemberVo memVo = memberService.selectLoginMember(vo);
+			
+			if(memVo==null) { 	//로그인이 실패한 경우, 
+				return "redirect:/member/login.do";
+				// redirect는 맨 처음 위로 올라가서 서버에서 직접 가지 않는다.
+				//크롬에게 이 내용이 담긴 응답이 간다.->주소창에 친 것처럼 get방식으로 간다.->크롬이 주소내용을 서버에게 요청
+			}else { 	//로그인이 성공한 경우
+				session.setAttribute("loginUser", memVo); 	//로그인성공한 사용자 정보를 세션에 "loginUser"라는 이름으로 저장 
+				return "redirect:/member/list.do"; 
+			}
+	}
+	
+	//파라미터로 세션객체 받아서 사용하기(HttpSession session = req.getSession();)
+	@RequestMapping(value = "/member/logout.do", method = RequestMethod.GET)  // 링크눌러서 하게될테니까 get방식으로
+	public String logout(HttpSession session) {
+//		session.setAttribute("loginUser", null); //1. 속성값으로 null을 저장.
+//		session.removeAttribute("loginUser");  //2. 속성(자체)를 삭제.
+		session.invalidate();		//3. 세션객체 전체를 초기화(삭제 후 재생성)
+		
+		return "redirect:/member/login.do";
+	}
 	
 	
+
 	
 }
 

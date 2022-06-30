@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 //회원목록
 @Controller
+@RequestMapping("/bbs/") //이 컨트롤러 내부의 @RequestMapping 메서드들의 공통경로를 클래스에 설정 가능. 모든 버전에서 사용 가능.
 public class BbsController { 
 	//스프링에서 memberDao변수에 넣을 수 있는 MemberDao 타입의 애들 자동 주입
 	@Autowired
@@ -34,28 +37,33 @@ public class BbsController {
 	//접근 제한자 -> 붙여도 되고 안붙여도 되지만 어차피 외부에서 쓰지 않기 때문에  
 	
 	// 게시글목록(글번호, 글제목, 작성자, 작성일) /bbs/list.do
-	@RequestMapping(value = "/bbs/list.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "list.do", method = RequestMethod.GET)
+//	@GetMapping(value = "list.do")    //스프링4.3이상부터 사용가능 
+	@GetMapping("list.do")   		   // 어노테이션에서 value값이 하나만 있을땐 생략 가능
 	public String list(Map<String, Object> map) {
 		List<BbsVo> list = bbsService.selectBbsList();
 		map.put("bbsList", list); 
-		return "bbs/bbsList"; 
+		return "bbs/bbsList";   //  /WEB-INF/views/bbs/bbsList.jsp
 	}
 	
 	// 게시글 추가 폼
-	@RequestMapping(value = "/bbs/add.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "add.do", method = RequestMethod.GET)
+	@GetMapping("add.do") 
 	public String addForm() {
 		return "bbs/bbsAdd";
 	}
 	
 	// 게시글 추가하기
-	@RequestMapping(value = "/bbs/add.do", method = RequestMethod.POST)
+//	@RequestMapping(value = "add.do", method = RequestMethod.POST)
+	@PostMapping("add.do")
 	public String add(BbsVo vo) {
 		int num = bbsService.insertBbs(vo);
 		return "redirect:/bbs/list.do";
 	}
 	
 	// 게시글 수정 폼
-	@RequestMapping(value = "/bbs/edit.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "edit.do", method = RequestMethod.GET)
+	@GetMapping("edit.do")                             
 	public String editForm(int bbsNo, Map<String, Object> map) {
 		BbsVo vo = bbsService.selectBbs(bbsNo);
 		map.put("bbsVo", vo);
@@ -63,14 +71,16 @@ public class BbsController {
 	}
 	
 	//게시글 수정하기
-	@RequestMapping(value = "/bbs/edit.do", method = RequestMethod.POST)
+//	@RequestMapping(value = "edit.do", method = RequestMethod.POST)
+	@PostMapping("edit.do")
 	public String edit(BbsVo vo) {
 		int num = bbsService.updateBbs(vo); 
 		return "redirect:/bbs/list.do";
 	}
 	
 	//게시글 삭제하기
-	@RequestMapping(value = "/bbs/del.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "del.do", method = RequestMethod.GET)
+	@GetMapping("del.do") 
 	public String del(int bbsNo ) {
 		System.out.println("aaa");
 		int num = bbsService.delBbs(bbsNo);

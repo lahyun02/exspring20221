@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
+@Mapper // <- 실행되려면 BbsDao의 메소드 이름과 xml의 쿼리문 id 이름이 같아야 한다.
 public interface BbsDao {
 	//db관련 코드와 ui관련 코드 분리
 	

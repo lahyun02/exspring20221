@@ -34,6 +34,22 @@
 	이런 걸 이용해서 스프링이 요청처리를 한다..!-->
 	<context:component-scan base-package="com.exam.exspring" />
 	
+	<interceptors>
+		<interceptor>
+			<!-- 어떤 경로(주소)로 요청이 왔을 때 인터셉터를 실행할지 결정 -->
+			<mapping path="/**"/>  <!-- 모든 경로로 요청이 옴 -->
+			<!-- 인터셉터를 실행시키지 않을 경로 지정 -->
+			<exclude-mapping path="/member/login.do"/> 
+			<exclude-mapping path="/member/add.do"/> 
+			<!-- 실행할 인터셉터 클래스 등록 -->
+			<beans:bean class="com.exam.exspring.member.LoginInterceptor" /> 
+		</interceptor>
+	</interceptors>
+	
+	
+	
+	
+	
 	<!-- 데이터베이스 연결을 관리하는 커넥션풀로서 DBCP를 등록 -->
 	<!-- DB연결을 위해 DB 정보를 알려줌. -->
 	<beans:bean id="ds" class="org.apache.commons.dbcp2.BasicDataSource">
@@ -61,8 +77,9 @@
 	
 	<!-- com.exam.exspring.member 패키지 아래에 존재하는 @Mapper 애노테이션이 적용된 인터페이스를 찾아서, 
 	마이바티스를 실행하는 그 인터페이스의 구현체를 자동 생성하여 스프링에 등록  -->
-	<mybatis-spring:scan base-package="com.exam.exspring.member" annotation="org.apache.ibatis.annotations.Mapper" />
-	<mybatis-spring:scan base-package="com.exam.exspring.bbs" annotation="org.apache.ibatis.annotations.Mapper" />
+	<mybatis-spring:scan base-package="com.exam.exspring" annotation="org.apache.ibatis.annotations.Mapper" />
+	<!-- <mybatis-spring:scan base-package="com.exam.exspring.member" annotation="org.apache.ibatis.annotations.Mapper" /> -->
+	<!-- <mybatis-spring:scan base-package="com.exam.exspring.bbs" annotation="org.apache.ibatis.annotations.Mapper" /> -->
 	
 	
 </beans:beans>

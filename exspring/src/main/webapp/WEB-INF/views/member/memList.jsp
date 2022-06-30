@@ -17,7 +17,7 @@
 		<%--<%@ include file="" %>--%>
 		
 		<%-- 다른 jsp파일로 점프해서 그 jsp파일을 실행시킨 다음 돌아와서 이 파일 실행. 이 방법으로 한다.  --%>
-		<jsp:include page="/WEB-INF/views/menu.jsp" />
+		<jsp:include page="/WEB-INF/views/comm/menu.jsp" />
 		
 		<%-- 현재 프로젝트 외에 다른 사이트 구글, 네이버 의 결과도 가져와서 사용가능   --%>
 		<%--<c:import url=""></c:import>--%>
