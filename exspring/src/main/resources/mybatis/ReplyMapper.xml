@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace에 replyDao 인터페이스 패키지이름과 똑같이 함으로써 인터페이스ReplyDao와 연결시켜준다. -->
+<mapper namespace="com.exam.exspring.reply.ReplyDao">
+	
+	<!-- 인터페이스ReplyDao 의 메서드 이름과 똑같이 함으로써 sql문과 연결  -->
+	<insert id="insertReply" parameterType="com.exam.exspring.reply.ReplyVo"> 
+		INSERT INTO reply
+		(REP_NO, REP_CONTENT, REP_WRITER, REP_REG_DATE, REP_BBS_NO)
+		VALUES
+		(rep_seq.nextval, #{repContent}, #{repWriter}, SYSDATE, #{repBbsNo} )
+	</insert>
+
+
+</mapper>
+

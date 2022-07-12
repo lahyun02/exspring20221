@@ -32,10 +32,11 @@
 			<th scope="row">내용</th>
 			<td><textarea rows="10" cols="50" name="bbsContent"></textarea></td>
 		</tr>
-		<tr>
+		<%-- <tr>
 			<th scope="row">작성자</th>
-			<td><input type='text' name='bbsWriter'/></td>
-		</tr>
+			<td><input type='text' name='bbsWriter' value="${sessionScope.loginUser.memId }" /></td>
+			이렇게 하면 js등으로 보안이 뚫릴수있음. 자바에서 처리해야.
+		</tr> --%>
 	</table>
 	<input class="btn btn-light" type='submit' value="저장" /> 
 

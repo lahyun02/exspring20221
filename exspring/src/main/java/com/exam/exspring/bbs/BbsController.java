@@ -4,12 +4,17 @@ package com.exam.exspring.bbs;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
+import com.exam.exspring.member.MemberVo;
 
 //서블릿은 스프링에서 만든 dispatcher-servlet이 있어서 HttpServlet 상속은 생략
 
@@ -56,7 +61,14 @@ public class BbsController {
 	// 게시글 추가하기
 //	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@PostMapping("add.do")
-	public String add(BbsVo vo) {
+	public String add(BbsVo vo, HttpSession session, @SessionAttribute("loginUser") MemberVo memVo) {
+		//@SessionAttribute -> 4.3이상부터 가능. 파라미터앞에 SessionAttribute 이름으로 저장된 세션 정보를 memVO에 저장해 사용가능.
+		//게시판 추가에서(bbsAdd.jsp) 작성한 정보가 파라미터 안의 BbsVo vo로 들어가서 저장된다.
+		//세션에 로그인한 사람의 아이디를 loginUser라는 이름으로 저장해놨음-> MemberController의 login메소드 참고
+//		MemberVo memVo = (MemberVo) session.getAttribute("loginUser"); //로그인한 사람의 정보를 세션에서 꺼내오기 (직접)
+		// 세션에는 온갖 게 다 저장되니까 우리가 꺼내오고 싶은 MemberVo의 정보만 꺼내오고 싶으므로 MemberVo로 강제 형변환함.
+ 		vo.setBbsWriter( memVo.getMemId() ); //세션에서 꺼내온 로그인한 사용자의 정보를 작성자로 setter저장하기.
+		
 		int num = bbsService.insertBbs(vo);
 		return "redirect:/bbs/list.do";
 	}

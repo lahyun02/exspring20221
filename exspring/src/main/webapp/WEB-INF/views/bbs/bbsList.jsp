@@ -39,7 +39,7 @@
 					다르게 하고 싶으면 @RequestParam을 이용해서 변수명 다르게 할 수 있음.
 					파라미터값을 전달하기 위해서 파라미터 이름이 일치해야하기 때문. --%>
 					<td><c:out value="${vo.bbsWriter}" /></td>
-					<td><fmt:formatDate value="${vo.bbsRegDate}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/></td>
+					<td><fmt:formatDate value="${vo.bbsRegDate}" pattern="yyyy년 MM월 dd일"/></td>
 				</tr>
 			</c:forEach>
 		</tbody>

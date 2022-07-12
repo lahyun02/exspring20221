@@ -15,6 +15,7 @@
   	<!-- 스프링 component-scan 에 맞춰서 경로 -->
   	<typeAlias type="com.exam.exspring.member.MemberVo" alias="MemberVo"/>
   	<typeAlias type="com.exam.exspring.bbs.BbsVo" alias="BbsVo"/>
+  	<typeAlias type="com.exam.exspring.reply.ReplyVo" alias="ReplyVo"/>
   	<!-- 마이바티스는 alias="bbsvo"로 읽음. 대소문자를 구분하지 않음. 우리가 읽을때 편하기때문에 BbsVo로 써준다.(권장) -->
   	<!-- <typeAlias type="com.exam.student.StudentVo" alias="StudentVo"/> -->
   </typeAliases>
@@ -38,6 +39,7 @@
   	<!-- 테이블이 하나씩 추가될 때마다 mapper 파일을 만들고 여기에 추가하면 된다.  -->
     <mapper resource="mybatis/MemberMapper.xml"/>
     <mapper resource="mybatis/BbsMapper.xml"/>
+    <mapper resource="mybatis/ReplyMapper.xml"/>
     <!-- <mapper resource="mybatis/StudentMapper.xml"/> -->
   </mappers>
 </configuration>

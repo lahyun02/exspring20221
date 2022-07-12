@@ -19,6 +19,8 @@
 	
 	<%-- 로그인 했을 경우 --%>
 	<c:if test="${loginUser!=null }">
+		<a href="${pageContext.request.contextPath}/member/list.do">회원관리</a> | 
+		<a href="${pageContext.request.contextPath}/bbs/list.do">게시판</a> | 
 		<c:out value="${loginUser.memName}"></c:out> 님 | 	<%-- 악성스크립트 대시해서 c:out에 출력(보안) --%>
 		<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a> 
 	</c:if>
