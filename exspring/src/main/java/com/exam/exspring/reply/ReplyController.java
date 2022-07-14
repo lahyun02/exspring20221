@@ -1,5 +1,9 @@
 package com.exam.exspring.reply;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +13,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exam.exspring.member.MemberVo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class ReplyController {
 	@Autowired		//스프링으로부터 자동으로 주입받기
 	private ReplyService replyService;
 	
+	@RequestMapping(path = "/reply/list.do", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ReplyVo> list(int repBbsNo) { //파라미터명과 동일한 이름의 변수명 설정
+		List<ReplyVo> list = replyService.selectReplyList(repBbsNo); 
+		return list;
+	}
+	
+	
 	@RequestMapping(path = "/reply/add.do", method = RequestMethod.POST)
 	@ResponseBody  //이 메서드의 반환값을 그대로 응답으로 전송 (jsp 경로가 아닌, 문자열로 프린트 )
-	public String add(ReplyVo vo, HttpSession session) { 
+	public Map<String, Object> add(ReplyVo vo, HttpSession session) { 
 		//파라미터 값을 받기 위해 파라미터 이름과 같은 이름을 변수명으로 한다.(int repBbsNo, String repContent)
 		//다만 값 하나하나씩 일일이 받지 않기 위해 해당 속성을 갖고 있는 ReplyVo 객체로 받는다.
 		
@@ -27,8 +41,32 @@ public class ReplyController {
  		
  		//데이터베이스 댓글 추가(insert)
  		int num = replyService.insertReply(vo);  //0이면 insert안된거고, 1이면 insert가 잘 된것.
-
- 		return num + "개의 댓글 저장 성공";
+ 		
+ 		Map<String,Object> map = new HashMap<String, Object>();
+ 		map.put("no", num); //map에 num값을 담기
+ 		
+ 		return map; 
+ 		//스프링이 아래처럼 자동으로 json으로 바꿔서 보내준다.
+ 		
+// 		String jsonStr = "";  
+// 		ObjectMapper mapper = new ObjectMapper(); //JAVA객체 <-> JSON 문자열 변환 담당  
+// 		try {
+//			jsonStr = mapper.writeValueAsString(map); //JAVA객체 <-> JSON 문자열 변환
+//		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+//		}  
+// 		
+// 		return jsonStr;  // "{ \"no\" : " + num + " }";
 	}
 	
 }
+
+
+//JSON
+//자바스크립트 객체 표현을 그대로 사용
+//차이점1 : 문자열 표현에 쌍따옴표만 사용 가능
+//차이점2 : 객체의 속성이름을 문자열로 표현(쌍따옴표) 
+// { "memId" : "a001", "memPoint" : 10 }
+
+
+

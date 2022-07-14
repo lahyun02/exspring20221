@@ -12,7 +12,12 @@
 		VALUES
 		(rep_seq.nextval, #{repContent}, #{repWriter}, SYSDATE, #{repBbsNo} )
 	</insert>
-
+	
+	<select id="selectReplyList" parameterType="int" resultType="ReplyVo">  
+		SELECT REP_NO, REP_CONTENT, REP_WRITER, REP_REG_DATE, REP_BBS_NO
+		FROM REPLY
+		WHERE REP_BBS_NO = #{repBbsNo}
+	</select>
 
 </mapper>
 
