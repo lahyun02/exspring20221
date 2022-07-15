@@ -59,6 +59,24 @@ public class ReplyController {
 // 		return jsonStr;  // "{ \"no\" : " + num + " }";
 	}
 	
+	@RequestMapping(path = "/reply/del.do", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> del(ReplyVo vo, HttpSession session) {
+		
+		MemberVo memVo = (MemberVo) session.getAttribute("loginUser"); //로그인한 사람의 정보를 세션에서 꺼내오기 (직접)
+ 		vo.setRepWriter( memVo.getMemId() ); //세션에서 꺼내온 로그인한 사용자의 정보를 작성자로 setter저장하기.
+		
+		int num = replyService.deleteReply(vo); //mybatis-> 두 개 이상의 정보를 하나에 담아서 줘야함. vo 등
+		//JSON으로 보낼거라 값하나만 달랑 보내지 말고 객체 만들어  터이터를 담아서 주기
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+ 		map.put("no", num); //map에 num값을 담기
+ 		
+ 		return map;  
+		
+	}
+	
+	
 }
 
 

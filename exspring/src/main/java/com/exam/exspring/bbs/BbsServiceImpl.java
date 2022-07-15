@@ -13,8 +13,8 @@ public class BbsServiceImpl implements BbsService {
 	
 	// 게시글 목록
 	@Override
-	public List<BbsVo> selectBbsList() {
-		return bbsDao.selectBbsList();
+	public List<BbsVo> selectBbsList(SearchInfo info) {
+		return bbsDao.selectBbsList(info);
 	}
 	
 	// 게시글 추가하기

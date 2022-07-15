@@ -9,7 +9,9 @@ public interface ReplyDao {
 
 	int insertReply(ReplyVo vo);
 
-	List<ReplyVo> selectReplyList(int repBbsNo); 
+	List<ReplyVo> selectReplyList(int repBbsNo);
+
+	int deleteReply(ReplyVo vo);  
 
 	
 	

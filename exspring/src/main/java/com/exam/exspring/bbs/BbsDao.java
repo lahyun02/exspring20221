@@ -9,7 +9,7 @@ public interface BbsDao {
 	//db관련 코드와 ui관련 코드 분리
 	
 	//목록 가져오기
-	List<BbsVo> selectBbsList();
+	List<BbsVo> selectBbsList(SearchInfo info); 
 	
 	//게시글 수정하기
 	int insertBbs(BbsVo vo);

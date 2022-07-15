@@ -45,8 +45,8 @@ public class BbsController {
 //	@RequestMapping(value = "list.do", method = RequestMethod.GET)
 //	@GetMapping(value = "list.do")    //스프링4.3이상부터 사용가능 
 	@GetMapping("list.do")   		   // 어노테이션에서 value값이 하나만 있을땐 생략 가능
-	public String list(Map<String, Object> map) {
-		List<BbsVo> list = bbsService.selectBbsList();
+	public String list(SearchInfo info, Map<String, Object> map) {
+		List<BbsVo> list = bbsService.selectBbsList(info);
 		map.put("bbsList", list); 
 		return "bbs/bbsList";   //  /WEB-INF/views/bbs/bbsList.jsp
 	}

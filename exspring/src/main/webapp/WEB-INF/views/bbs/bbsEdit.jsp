@@ -88,14 +88,54 @@
 				  $('<div>').text( vo.repWriter ).appendTo( '#replyDiv' );    //<div>vo.repWriter</div>
 				  $('<div>').text( vo.repContent ).appendTo( '#replyDiv' );    //<div>vo.repContent</div>
 				  $('<div>').text( vo.repRegDate ).appendTo( '#replyDiv' );    //<div>vo.repRegDate</div>
-				  $('<button>').text('삭제').appendTo( '#replyDiv' );    //<button>삭제</button>
+					
+				  //댓글의 작성자와 로그인한 사람의 아이디가 같으면 삭제 버튼이 보여라.
+				  if(vo.repWriter === '${loginUser.memId}' ) {  
+					  //${sessionScope.loginUser.memId}에서 sessionScope는 생략 가능. 
+					  //vo.repWriter === ${loginUser.memId}에서 ${loginUser.memId}은 변수명으로 해석됨. 문자열로 인식되어야하므로 ''따옴표 작성. 
+					  $('<button>').attr('data-no', vo.repNo).addClass('delBtn').text('삭제').appendTo( '#replyDiv' );    //<button>삭제</button>
+				  }
+				  //.attr('속성이름', '속성값') 커스텀 속성 지정가능 기존 html태그나 커스텀속성 가능(원래있던 태그와 충돌/추후 버전업에서 추가될 가능성)
 				  $('<hr>').appendTo('#replyDiv');    //<hr></hr>
 			  }
 		}).fail(function( jqXHR, textStatus ) {  //요청이 실패한 경우 실행할 함수 
 			alert( "Request failed: " + textStatus );
 		});
 	}
-
+	
+	//현재 문서에 존재하지 않는, 동적으로 바뀌게 하고 싶을때 이런 방식 사용
+	//정적으로 존재하는애       //동적으로 변하게하고 싶은 애
+	$('#replyDiv').on('click', '.delBtn', function() {
+		alert('삭제!');
+		
+		$.ajax({  //요청보내기
+			  url: "${pageContext.request.contextPath}/reply/del.do",  //요청주소
+			  method: "GET",	//요청방식
+			  data: { 
+				  repNo : $(this).attr('data-no')
+				},  //파라미터 //클릭이벤트가 일어난 대상(this)의 data-no속성값
+				//this는 제이쿼리 객체가 아님. $(this) -> 제이쿼리 객체를 만듦. attr()은 제이쿼리 객체.
+				//값을 안주면 getter로 동작, 값을 주면 setter로 동작-> 대부분 api가 그렇게 설정되어 있음. 
+			  dataType: "json"  //text->문자열로 받겠다	//요청의 결과(서버의 응답)으로 받을 데이터의 형식  
+			}).done(function( msg ) {  //요청에 대한 응답을 성공적으로 받았을때 실행할 함수 //응답받기
+				  console.log( msg ); // { no : 1 }
+				  alert(msg.no + '개의 댓글이 삭제되었습니다.')
+				  refreshReplyList(); //댓글목록 출력 
+			}).fail(function( jqXHR, textStatus ) {  //요청이 실패한 경우 실행할 함수 
+				alert( "Request failed: " + textStatus );
+			});
+	}); 
+	
+	//document에 클릭이 발생했는데, .delBtn 이 선택자에게클릭 이벤트가 발생하면 해당 함수 실행
+	//조상에게 함수를 걸어줌. 클릭이벤트가 .delBtn에 걸려있는지 검사한 후 맞으면 함수 실행
+	
+	//$('.delBtn')~ -> 해당 시점에선 refreshReplyList();실행 전이므로 삭제 버튼이 없었음.
+	// refreshReplyList(); 밑으로 순서를 바꿔주면 당장은 해결되어보일 지 몰라도 
+	//$('#saveBtn')~ 함수가 실행돼서 refreshReplyList();로 초기화되면 삭제버튼이 없어지고 새로 생기기 때문에 안됨. 
+	
+	//문서가 랜더링된 후 클릭이벤트가 발생할 때마다 계속 '.delBtn'을 검사함. 성능에 비효율적
+	//$('#replyDiv') -> 삭제버튼은 #replyDiv영역 안에 있으므로.
+	
 	refreshReplyList();
 
 	$('#saveBtn').on('click', function() {

@@ -6,6 +6,8 @@ public interface ReplyService {
 
 	int insertReply(ReplyVo vo);
 
-	List<ReplyVo> selectReplyList(int repBbsNo);  
-	
+	List<ReplyVo> selectReplyList(int repBbsNo);
+
+	int deleteReply(ReplyVo vo);
+
 }

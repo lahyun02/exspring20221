@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>bbs게시판</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <style>
 	a {
 		text-decoration: none;
@@ -21,6 +21,27 @@
 <jsp:include page="/WEB-INF/views/comm/menu.jsp" />
 	<h1>게시판목록</h1>
 	<a href='${pageContext.request.contextPath}/bbs/add.do'><button class="btn btn-light" type="button">게시글추가</button></a><br/>
+	
+	<%-- 검색완료후 다시 게시물목록이 나와야한다. --%>
+	
+	<form action="${pageContext.request.contextPath}/bbs/list.do">
+		<select name="searchType">
+			<option value="title" >제목</option>
+			<option value="content" >내용</option>
+			<option value="total" >제목+내용</option> 
+		</select>
+		<script type="text/javascript">
+//			document.querySelector('[name="searchType"]').value = '${searchInfo.searchType}';
+			if('${searchInfo.searchType}') {
+				$('[name="searchType"]').val('${searchInfo.searchType}');  //${searchInfo.searchWord == 'title'?'selected':'' } 
+			}
+			//if('${searchInfo.searchType}' != '') if('${searchInfo.searchType}'.length >0)
+			//자바스크립트는 자동으로 형변환을 해줌
+		</script>
+		<input type="text" name="searchWord" value="${searchInfo.searchWord}" placeholder="검색어를 입력하세요" /> <%-- 파라미터로 보낼 name을 정한다 --%>
+		<input type="submit" value="검색" />
+	</form>
+	
 	<table class="table table-hover">
 		<thead>
 			<tr>

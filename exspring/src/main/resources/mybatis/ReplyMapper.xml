@@ -18,6 +18,12 @@
 		FROM REPLY
 		WHERE REP_BBS_NO = #{repBbsNo}
 	</select>
+	
+	<delete id="deleteReply" parameterType="ReplyVo"> 
+		DELETE 
+		FROM REPLY
+		WHERE REP_NO = #{repNo} AND REP_WRITER = #{repWriter}
+	</delete>
 
 </mapper>
 
